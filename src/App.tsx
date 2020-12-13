@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ReactElement } from 'react'
+//import 'fontsource-roboto'
+import TopMenu from './Components/TopMenu'
+import Docentes from './Components/Docentes'
+import { Container } from 'semantic-ui-react'
 
-function App() {
+function App(): ReactElement {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <ThemeProvider theme={theme}> */}
+      <TopMenu />
+      <Container>
+        <Docentes />
+      </Container>
+      {/* </ThemeProvider> */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+
+// import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+
+// declare module '@material-ui/core/styles/createMuiTheme' {
+//   interface Theme {
+//     status: {
+//       danger: string
+//     }
+//   }
+//   // allow configuration using `createMuiTheme`
+//   interface ThemeOptions {
+//     status?: {
+//       danger?: string
+//     }
+//   }
+// }
+
+// const theme = createMuiTheme({
+//   spacing: 10,
+// })
