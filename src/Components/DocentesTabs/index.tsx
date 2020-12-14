@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tab } from 'semantic-ui-react'
 
-import * as DadosGerais from './DadosGerais'
+import * as DadosGerais from './DadosGerais/index'
 import * as Projetos from './Projetos'
 
 const panes = [
