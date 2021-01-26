@@ -8,11 +8,13 @@ export default function TopMenu(): ReactElement {
       title: 'Docentes',
       name: 'docentes',
       component: <ProvisoryNullComponent />,
+      route: '',
     },
     {
       title: 'Funcionários',
       name: 'func',
       component: <ProvisoryNullComponent />,
+      route: '',
     },
   ]
 
@@ -23,12 +25,13 @@ export default function TopMenu(): ReactElement {
       <Menu.Item>
         <img src="logo192.png" alt="" />
       </Menu.Item>
-      {TopMenuItems.map((item, x) => {
+      {TopMenuItems.map((item, menuKey) => {
         return (
           <Menu.Item
             name={item.name}
             active={activeItem === item.name}
-            onClick={() => setActiveItem(item.name)}>
+            onClick={() => setActiveItem(item.name)}
+            key={menuKey}>
             {item.title}
           </Menu.Item>
         )

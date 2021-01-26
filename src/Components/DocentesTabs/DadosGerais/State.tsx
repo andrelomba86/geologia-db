@@ -1,19 +1,11 @@
-export interface FormState {
-  [index: string]: {
-    value: any
-  }
-}
+import { FormState } from '../../Global'
 
 export const fieldsState: FormState = {
   Docente: {
     value: 'Chang Hung Kiang',
-    // set: () => {},
-    // setSelected: () => {},
   },
   DataAdmissão: {
-    value: new Date(
-      'Fri Dec 04 2020 00:00:00 GMT-0300 (Horário Padrão de Brasília)'
-    ),
+    value: new Date(2014, 11, 1),
   },
   Matricula: {
     value: '600648-6',

@@ -1,42 +1,47 @@
 import { ReactElement } from 'react'
+import { FormFieldProps } from 'semantic-ui-react'
+/* 
 
+Types 
+
+
+*/
+
+export interface FormState {
+  [index: string]: {
+    value: any
+  }
+}
 export interface MenuItem {
   title: string
   name: string
   component: ReactElement
   icon?: string
+  route: string
 }
 export interface MenuItems extends Array<MenuItem> {}
 
-export enum TabsDocentes {
-  DADOS_GERAIS = 1,
-  PROJETOS = 2,
-  RELATORIO = 3,
+interface FieldState {
+  component: React.FunctionComponent
+  fieldName: string
+  options?: object
+  props: FormFieldProps
 }
+export interface FieldStateArray extends Array<Array<FieldState>> {}
 
-export const initialData = {
-  DataAdmissão: '10/10/2019',
-  Cargo: '',
-  DataCargo: '',
-  Referencia: '',
-  Carreira:
-    'MS5.1,18/07/1997 00:00:00;MS6,08/06/2011 00:00:00;MS3.1,26/06/1987 00:00:00',
-  RegimeTrabalho: '',
-  RegimeJurídico: '',
-  RegimeAplicação: '',
-  RegimeConfirmação: '',
-  Matricula: '',
-  Endereço: '',
-  Email: '',
-  TelefoneResidencial: '',
-  TelefoneCelular: '',
-  TelefoneOutro: '',
-  CPF: '',
-  RG: '',
-  PIS: '',
-  CREA: '',
-  DataNascimento: '',
-  BancoNumero: '',
-  BancoAgencia: '',
-  BancoConta: '',
+/*
+
+Functions 
+
+*/
+
+export function createNewFieldUpdater(
+  fieldName: string,
+  state: FormState,
+  stateSetter: React.Dispatch<React.SetStateAction<FormState>>
+): Function {
+  return (value: any) => {
+    const newFieldState = { ...state[fieldName], value: value }
+    stateSetter({ ...state, [fieldName]: { ...newFieldState } })
+  }
 }
