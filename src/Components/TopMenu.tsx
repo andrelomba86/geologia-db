@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react'
 import { Menu } from 'semantic-ui-react'
-import { MenuItems } from './Global'
+import { MenuItems } from './GlobalTypes'
 
 export default function TopMenu(): ReactElement {
   const TopMenuItems: MenuItems = [

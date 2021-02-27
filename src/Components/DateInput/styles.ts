@@ -1,28 +1,4 @@
-import { calendarStyle } from './types'
-
-const calendarStyles: calendarStyle = {
-  Container: {
-    position: 'absolute',
-    padding: '6px',
-    //top: '20px',
-    backgroundColor: '#fff',
-    zIndex: 1000,
-    border: '1px solid rgba(34,36,38,.15)',
-    borderRadius: '.28571429rem',
-    marginTop: '10px',
-    display: 'block',
-  },
-  Days: {
-    padding: '15px',
-    background: '#bbb',
-    '&:hover': {
-      background: '#000',
-    },
-  },
-}
-
 export const calendarCSS = `
-
   .cal-container {
     position: absolute;
     padding: 10px;
@@ -42,7 +18,6 @@ export const calendarCSS = `
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
     grid-gap: 3px;
-    
   }
   .cal-buttons-container {
     width: 100%;
@@ -75,7 +50,6 @@ export const calendarCSS = `
     // color: #fff !important;
     font-weight: 700;
   }
-
   .cal-days {
     display: flex;
     align-items: center;
@@ -112,5 +86,3 @@ export const calendarCSS = `
   //   font-weight: 700;
   // }
 `
-
-export default calendarStyles

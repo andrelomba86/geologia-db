@@ -1,16 +1,8 @@
 import { ReactElement } from 'react'
 import { FormFieldProps } from 'semantic-ui-react'
-/* 
-
-Types 
-
-
-*/
 
 export interface FormState {
-  [index: string]: {
-    value: any
-  }
+  [index: string]: any
 }
 export interface MenuItem {
   title: string
@@ -28,20 +20,3 @@ interface FieldState {
   props: FormFieldProps
 }
 export interface FieldStateArray extends Array<Array<FieldState>> {}
-
-/*
-
-Functions 
-
-*/
-
-export function createNewFieldUpdater(
-  fieldName: string,
-  state: FormState,
-  stateSetter: React.Dispatch<React.SetStateAction<FormState>>
-): Function {
-  return (value: any) => {
-    const newFieldState = { ...state[fieldName], value: value }
-    stateSetter({ ...state, [fieldName]: { ...newFieldState } })
-  }
-}

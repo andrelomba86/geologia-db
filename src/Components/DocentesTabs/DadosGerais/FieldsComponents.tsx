@@ -1,6 +1,6 @@
 // import React from 'react'
 import { Form } from 'semantic-ui-react'
-import { FieldStateArray } from '../../Global'
+import { FieldStateArray } from '../../GlobalTypes'
 import DateInput from '../../DateInput'
 
 const docentes_list = [
@@ -8,11 +8,6 @@ const docentes_list = [
   { text: 'Chang Hung Kiang', value: 'Chang Hung Kiang' },
   { text: 'Daniel Marcos Bonotto', value: 'Daniel Marcos Bonotto' },
 ]
-//  interface FormState extends React.FunctionComponent<any> {
-//   [index: string]: {
-//     value: any
-//   }
-// }
 
 const fields: FieldStateArray = [
   [
@@ -66,7 +61,7 @@ const fields: FieldStateArray = [
         search: true,
         selection: true,
         allowAdditions: true,
-        options: null,
+        options: [],
         width: 5,
       },
     },

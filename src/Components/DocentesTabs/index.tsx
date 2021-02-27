@@ -1,12 +1,12 @@
 import React from 'react'
 import { Tab } from 'semantic-ui-react'
 
-import * as DadosGerais from './DadosGerais/index'
-import * as Projetos from './Projetos'
+import DadosGerais from './DadosGerais/index'
+import Projetos from './Projetos'
 
 const panes = [
-  { menuItem: DadosGerais.tabName, render: () => <DadosGerais.default /> },
-  { menuItem: Projetos.tabName, render: () => <Projetos.default /> },
+  { menuItem: 'Dados Gerais', render: () => <DadosGerais /> },
+  { menuItem: 'Projetos', render: () => <Projetos /> },
 ]
 
 const DocentesTabs = () => (
