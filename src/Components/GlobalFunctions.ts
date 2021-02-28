@@ -1,15 +1,13 @@
-import { FormState } from './GlobalTypes'
-
-export function createNewFieldUpdater(
-  fieldName: string,
-  state: FormState,
-  stateSetter: React.Dispatch<React.SetStateAction<FormState>>
-): Function {
-  return (value: any) => {
-    // const newFieldState = { ...state[fieldName], value }
-    stateSetter({ ...state, [fieldName]: value })
-  }
-}
+// export function createNewFieldUpdater(
+//   fieldName: string,
+//   state: any,
+//   stateSetter: React.Dispatch<React.SetStateAction<any>>
+// ): Function {
+//   return (value: any) => {
+//     // const newFieldState = { ...state[fieldName], value }
+//     stateSetter({ ...state, [fieldName]: value })
+//   }
+// }
 
 export const maskDate = (value: string): string => {
   /** NUMBER ONLY */

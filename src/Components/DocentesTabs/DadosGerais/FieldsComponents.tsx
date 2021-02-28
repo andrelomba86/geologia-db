@@ -1,22 +1,23 @@
 // import React from 'react'
-import { Form } from 'semantic-ui-react'
-import { FieldStateArray } from '../../GlobalTypes'
-import DateInput from '../../DateInput'
+import { Form } from "semantic-ui-react"
+import { FieldsComponents } from "../../GlobalTypes"
+import { FieldsTypes } from "./types"
+import DateInput from "../../DateInput"
 
 const docentes_list = [
-  { text: 'Cesar Augusto Moreira', value: 'Cesar Augusto Moreira' },
-  { text: 'Chang Hung Kiang', value: 'Chang Hung Kiang' },
-  { text: 'Daniel Marcos Bonotto', value: 'Daniel Marcos Bonotto' },
+  { text: "Cesar Augusto Moreira", value: "Cesar Augusto Moreira" },
+  { text: "Chang Hung Kiang", value: "Chang Hung Kiang" },
+  { text: "Daniel Marcos Bonotto", value: "Daniel Marcos Bonotto" },
 ]
 
-const fields: FieldStateArray = [
+const fields: FieldsComponents<FieldsTypes>[][] = [
   [
     {
-      fieldName: 'Docente',
+      fieldName: "Docente",
       component: Form.Dropdown,
       props: {
-        label: 'Nome',
-        placeholder: 'Nome do docente',
+        label: "Nome",
+        placeholder: "Nome do docente",
         search: true,
         selection: true,
         allowAdditions: true,
@@ -27,37 +28,37 @@ const fields: FieldStateArray = [
   ],
   [
     {
-      fieldName: 'DataAdmissão',
+      fieldName: "DataAdmissão",
       component: DateInput,
       props: {
-        label: 'Data de admissão',
-        placeholder: 'DD/MM/AAAA',
+        label: "Data de admissão",
+        placeholder: "DD/MM/AAAA",
         width: 3,
       },
     },
     {
-      fieldName: 'Matricula',
+      fieldName: "Matricula",
       component: Form.Input,
       props: {
-        label: 'Matrícula',
+        label: "Matrícula",
         width: 3,
       },
     },
     {
-      fieldName: 'Referencia',
+      fieldName: "Referencia",
       component: Form.Input,
       props: {
-        label: 'Referência',
+        label: "Referência",
         width: 3,
       },
     },
   ],
   [
     {
-      fieldName: 'Cargo',
+      fieldName: "Cargo",
       component: Form.Dropdown,
       props: {
-        label: 'Cargo',
+        label: "Cargo",
         search: true,
         selection: true,
         allowAdditions: true,
@@ -77,9 +78,9 @@ const fields: FieldStateArray = [
     // },
     {
       component: Form.Input,
-      fieldName: 'Carreira',
+      fieldName: "Carreira",
       props: {
-        label: 'Carreira',
+        label: "Carreira",
         width: 4,
       },
     },

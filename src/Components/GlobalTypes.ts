@@ -1,9 +1,6 @@
-import { ReactElement } from 'react'
-import { FormFieldProps } from 'semantic-ui-react'
+import { ReactElement } from "react"
+import { FormFieldProps, FormProps } from "semantic-ui-react"
 
-export interface FormState {
-  [index: string]: any
-}
 export interface MenuItem {
   title: string
   name: string
@@ -13,10 +10,10 @@ export interface MenuItem {
 }
 export interface MenuItems extends Array<MenuItem> {}
 
-interface FieldState {
-  component: React.FunctionComponent
-  fieldName: string
-  options?: object
+export interface FieldsComponents<T> {
+  // component: React.FunctionComponent
+  component: React.FC<any>
+  fieldName: keyof T
+  options?: {}
   props: FormFieldProps
 }
-export interface FieldStateArray extends Array<Array<FieldState>> {}

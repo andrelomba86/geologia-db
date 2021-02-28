@@ -1,40 +1,43 @@
-import React, { useState } from 'react'
-import { Form, Tab } from 'semantic-ui-react'
-import { createNewFieldUpdater, tabIndexGenerate } from '../../GlobalFunctions'
-import fieldsComponents from './FieldsComponents'
-import fieldsValues from './State'
+import React, { useEffect, useState } from "react"
+import { Form, Tab } from "semantic-ui-react"
+import { tabIndexGenerate } from "../../GlobalFunctions"
+import { FieldsTypes } from "./types"
+import { emptyState } from "./consts"
+import fieldsComponents from "./FieldsComponents"
+import { FieldsComponents } from "../../GlobalTypes"
+import { DropdownItemProps } from "semantic-ui-react"
 
-// import DateInput from '../../DateInput'
+import DB from "./DBEmulator"
 
 export default function DadosGerais() {
-  // ATUALIZAR TYPESCRIPT FIELDS, SETFIELDS
-  const [fields, setFields] = useState<typeof fieldsValues>(fieldsValues)
+  const [fieldsValues, setFieldsValues] = useState<FieldsTypes>(emptyState)
   const [fieldsChanged, setFieldsChanged] = useState(false)
 
-  function handleFieldChange(fieldName: string) {
-    return function (
-      _e: React.EventHandler<React.SyntheticEvent>,
-      { value }: any
-    ) {
-      const fieldUpdate = createNewFieldUpdater(fieldName, fields, setFields)
-      console.log('update', value)
-      fieldUpdate(value)
+  useEffect(() => {
+    const data = DB.getValues()
+    setFieldsValues(data)
+  }, [])
+
+  const handleFieldChange = (fieldName: keyof FieldsTypes) => {
+    return (_e: React.SyntheticEvent, { value }: any) => {
+      setFieldsValues({ ...fieldsValues, [fieldName]: value })
       setFieldsChanged(true)
     }
   }
 
   /**** Adicionar interface ComboArray ou outra coisa no lugar de Array */
 
-  const handleAddItem = (options: Array<any>) => {
-    return function (_e: React.SyntheticEvent, { value }: any) {
+  const handleAddItem = (options: DropdownItemProps[]) => {
+    return (_e: React.SyntheticEvent, { value }: DropdownItemProps) => {
       options.push({ text: value, value: value })
     }
   }
   const handleSaveButton = () => {
-    console.log(fields)
+    console.log(fieldsValues)
   }
   const handleCancelButton = () => {
-    setFields(fieldsValues)
+    // dispatchFieldsValues({ type: "Update", payload: cachedValues })
+    setFieldsValues(DB.getValues())
     setFieldsChanged(false)
   }
 
@@ -44,25 +47,26 @@ export default function DadosGerais() {
         {fieldsComponents.map((group: any, groupKey: number) => {
           return (
             <Form.Group key={groupKey}>
-              {group.map((field: any, fieldNum: number) => (
-                <field.component
-                  {...field.props}
-                  {...(field.props.options && {
-                    onAddItem: handleAddItem(field.props.options),
-                  })}
-                  tabIndex={tabIndexGenerate(groupKey, fieldNum)}
-                  onChange={handleFieldChange(field.fieldName)}
-                  value={fields[field.fieldName]}
-                  key={field.fieldName}
-                  fieldname={field.fieldName}
-                />
-              ))}
+              {group.map(
+                (field: FieldsComponents<FieldsTypes>, fieldNum: number) => (
+                  <field.component
+                    {...field.props}
+                    {...(field.props.options && {
+                      onAddItem: handleAddItem(field.props.options),
+                    })}
+                    tabIndex={tabIndexGenerate(groupKey, fieldNum)}
+                    onChange={handleFieldChange(field.fieldName)}
+                    value={fieldsValues[field.fieldName]}
+                    key={field.fieldName}
+                    fieldname={field.fieldName}
+                  />
+                )
+              )}
             </Form.Group>
           )
         })}
 
         <Form.Group>
-          {/* <DateInput value="" /> */}
           <Form.Button
             content="Salvar"
             primary

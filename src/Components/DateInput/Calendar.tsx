@@ -1,26 +1,25 @@
-import React, { useState } from 'react'
-import { calendarCSS } from './styles'
-import { CalendarStateType, CalendarProps, CalendarShift } from './types'
-import { createMonthArray, isSameDate } from './functions'
-import { monthNames } from './consts'
+import React, { useState } from "react"
+import "./styles.css"
+
+import { CalendarMonth, CalendarProps } from "./types"
+import { monthNames } from "./consts"
 import {
   CalendarContainer,
   CalendarButtonsContainer,
   CalendarButton,
   CalendarLabel,
-  CalendarHeader,
   CalendarDays,
-} from './components'
+} from "./components"
 
 const Calendar: React.FC<CalendarProps> = ({ setDate, date, id }) => {
   if (date === undefined) date = new Date()
 
-  const [calendarMonth, setCalendarMonth] = useState<CalendarStateType>({
+  const [calendarMonth, setCalendarMonth] = useState<CalendarMonth>({
     month: date.getMonth(),
     year: date.getFullYear(),
   })
 
-  const changeMonth = (amount: CalendarShift) => {
+  const changeMonthBy = (amount: number) => () => {
     let { month, year } = calendarMonth
     month += amount
 
@@ -30,60 +29,32 @@ const Calendar: React.FC<CalendarProps> = ({ setDate, date, id }) => {
     setCalendarMonth({ month, year })
   }
 
-  const calendarLabel = ` ${monthNames[calendarMonth.month]} ${
-    calendarMonth.year
-  }`
-
   return (
-    <>
-      <style>{calendarCSS}</style>
-      {/* <div className="cal-container" tabIndex={0} id={id}> */}
-      <CalendarContainer id={id}>
-        <CalendarButtonsContainer>
-          <CalendarButton
-            iconName="angle double left"
-            onClick={() => changeMonth(CalendarShift.previousYear)}
-          />
-          <CalendarButton
-            iconName="angle left"
-            onClick={() => changeMonth(CalendarShift.previousMonth)}
-          />
+    <CalendarContainer id={id}>
+      <CalendarButtonsContainer>
+        <CalendarButton
+          iconName="angle double left"
+          onClick={changeMonthBy(-12)}
+        />
+        <CalendarButton iconName="angle left" onClick={changeMonthBy(-1)} />
 
-          <CalendarLabel>{calendarLabel}</CalendarLabel>
+        <CalendarLabel>
+          {monthNames[calendarMonth.month]} {calendarMonth.year}
+        </CalendarLabel>
 
-          <CalendarButton
-            iconName="angle right"
-            onClick={() => changeMonth(CalendarShift.nextMonth)}
-          />
-          <CalendarButton
-            iconName="angle double right"
-            onClick={() => changeMonth(CalendarShift.nextYear)}
-          />
-        </CalendarButtonsContainer>
+        <CalendarButton iconName="angle right" onClick={changeMonthBy(1)} />
+        <CalendarButton
+          iconName="angle double right"
+          onClick={changeMonthBy(12)}
+        />
+      </CalendarButtonsContainer>
 
-        <CalendarHeader>
-          <CalendarDays
-            selectedDate={date}
-            calendarMonth={calendarMonth}
-            onClick={(event: React.MouseEvent, day: Date) =>
-              setDate(day, event)
-            }
-          />
-          {/* {createMonthArray(calendarMonth).map((day: Date, key: number) => (
-            <div
-              key={key}
-              onClick={(event: React.MouseEvent) => setDate(day, event)}
-              className={`
-                cal-days
-                ${day.getMonth() !== calendarMonth.month ? 'cal-days-grey' : ''}
-                ${isSameDate(day, date) ? 'cal-day-selected' : ''}
-              `}>
-              {day.getDate()}
-            </div>
-          ))} */}
-        </CalendarHeader>
-      </CalendarContainer>
-    </>
+      <CalendarDays
+        selectedDate={date}
+        calendarMonth={calendarMonth}
+        onClick={(event: React.MouseEvent, day: Date) => setDate(day, event)}
+      />
+    </CalendarContainer>
   )
 }
 

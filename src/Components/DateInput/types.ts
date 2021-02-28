@@ -1,41 +1,37 @@
-import { InputProps, SemanticICONS } from 'semantic-ui-react'
+import { InputProps, SemanticICONS } from "semantic-ui-react"
 
-export interface CalendarMonth {
-  month: number
-  year: number
-}
-
-export interface CalendarStateType {
-  //currentDate: monthYear
-  month: number
-  year: number
-}
-
-export interface CalendarProps {
-  setDate: Function
-  date?: Date
-  id: string
-}
-
-export type DateInputValue = Date | undefined
-
-export interface DateInputProps extends Omit<InputProps, 'onChange' | 'value'> {
+export interface DateInputProps extends Omit<InputProps, "onChange" | "value"> {
   onChange?: (
-    // event: React.ChangeEvent | React.FocusEvent,
     event: React.SyntheticEvent,
     data: { value: DateInputValue }
   ) => void
   value?: DateInputValue
 }
 
-export enum CalendarShift {
-  previousYear = -12,
-  nextYear = 12,
-  previousMonth = -1,
-  nextMonth = 1,
+export type DateInputValue = Date | undefined
+
+/* Calendar Types */
+
+export interface CalendarProps {
+  setDate: (day: Date, event: React.SyntheticEvent) => void
+  date?: Date
+  id: string
 }
+
 export type CalendarContainerProps = { id: string }
+
 export type CalendarButtonProps = {
   iconName: SemanticICONS
-  onClick: (event: React.MouseEvent) => void
+  onClick?: (event: React.MouseEvent) => void
+}
+
+export interface CalendarMonth {
+  month: number
+  year: number
+}
+
+export type CalendarDaysProps = {
+  selectedDate: Date
+  calendarMonth: CalendarMonth
+  onClick: (event: React.MouseEvent, day: Date) => void
 }

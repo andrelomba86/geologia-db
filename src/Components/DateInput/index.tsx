@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Form, Input } from 'semantic-ui-react'
-import Calendar from './Calendar'
-import { DateInputProps, DateInputValue } from './types'
-import { strToDate, maskDate, dateToLocale } from './functions'
+import React, { useEffect, useState } from "react"
+
+import { Form, Input } from "semantic-ui-react"
+
+import Calendar from "./Calendar"
+import { DateInputProps, DateInputValue } from "./types"
+import { strToDate, maskDate, dateToLocale } from "./functions"
 
 const DateInput: React.FC<DateInputProps> = ({
   value,
@@ -11,23 +13,20 @@ const DateInput: React.FC<DateInputProps> = ({
   width,
   ...props
 }) => {
-  console.log(value)
-  if (!(value instanceof Date)) {
-    value = undefined
-    // console.log('x')
-  }
-  const calendarID = `Calendar_${props.fieldname}`
-  const inputID = `Input_${props.fieldname}`
+  if (!(value instanceof Date)) value = undefined
 
-  const [showCalendar, setShowCalendar] = useState(false)
+  const inputID = `Input_${props.fieldname}`
+  const calendarID = `Calendar_${props.fieldname}`
+
   const [date, setDate] = useState<DateInputValue>(value)
+  const [showCalendar, setShowCalendar] = useState(false)
   const [keyboardInput, setKeyboardInput] = useState<string | null>(null)
 
   useEffect(() => {
     if (value !== date) setDate(value)
   }, [value, date])
 
-  const setDateAndHide = (
+  const setDateAndHideCalendar = (
     date: DateInputValue,
     event: React.SyntheticEvent
   ) => {
@@ -38,27 +37,24 @@ const DateInput: React.FC<DateInputProps> = ({
   }
 
   const handleOnBlur = (event: React.FocusEvent) => {
-    const relatedTarget: EventTarget | null = event.relatedTarget
-    const target = relatedTarget as HTMLElement
+    const target = event.relatedTarget as HTMLElement
 
     if (
       target?.id !== calendarID &&
       target?.previousElementSibling?.id !== inputID
     ) {
-      if (keyboardInput !== null)
-        setDateAndHide(strToDate(keyboardInput), event)
-      else setShowCalendar(false)
+      if (keyboardInput === null) setShowCalendar(false)
+      else setDateAndHideCalendar(strToDate(keyboardInput), event)
     }
   }
 
-  let strDate
-  if (keyboardInput !== null) strDate = maskDate(keyboardInput)
-  else strDate = dateToLocale(date)
+  let strDate =
+    keyboardInput == null ? dateToLocale(date) : maskDate(keyboardInput)
 
   const InputClickableIcons = {
     calendar: {
       icon: {
-        name: 'calendar outline',
+        name: "calendar outline",
         tabIndex: 0,
         link: true,
         bordered: true,
@@ -67,39 +63,37 @@ const DateInput: React.FC<DateInputProps> = ({
     },
     delete: {
       icon: {
-        name: 'delete',
+        name: "delete",
         tabIndex: 0,
         link: true,
         bordered: true,
-        onClick: (e: any) => setDateAndHide(undefined, e),
+        onClick: (e: React.MouseEvent) => setDateAndHideCalendar(undefined, e),
       },
     },
   }
 
   return (
-    <>
-      <Form.Field onBlur={handleOnBlur} width={width}>
-        <label>{label}</label>
-        <Input
-          id={inputID}
-          maxLength={10}
-          onClick={() => !showCalendar && setShowCalendar(true)}
-          onChange={event => setKeyboardInput(event.target.value)}
-          value={strDate}
-          {...(strDate
-            ? InputClickableIcons.delete
-            : InputClickableIcons.calendar)}
-          {...props}></Input>
-        {showCalendar && (
-          <Calendar
-            // onBlur={() => setShow(false)}
-            id={calendarID}
-            setDate={setDateAndHide}
-            date={date}
-          />
-        )}
-      </Form.Field>
-    </>
+    <Form.Field onBlur={handleOnBlur} width={width}>
+      <label>{label}</label>
+      <Input
+        id={inputID}
+        maxLength={10}
+        onClick={() => !showCalendar && setShowCalendar(true)}
+        onChange={(event) => setKeyboardInput(event.target.value)}
+        value={strDate}
+        {...(strDate
+          ? InputClickableIcons.delete
+          : InputClickableIcons.calendar)}
+        {...props}
+      />
+      {showCalendar && (
+        <Calendar
+          id={calendarID}
+          setDate={setDateAndHideCalendar}
+          date={date}
+        />
+      )}
+    </Form.Field>
   )
 }
 
