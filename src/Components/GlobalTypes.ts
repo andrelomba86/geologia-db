@@ -1,5 +1,5 @@
 import { ReactElement } from "react"
-import { FormFieldProps, FormProps } from "semantic-ui-react"
+import { FormFieldProps } from "semantic-ui-react"
 
 export interface MenuItem {
   title: string
