@@ -3,6 +3,7 @@ import { Form } from "semantic-ui-react"
 import { FieldsComponents } from "../../GlobalTypes"
 import { FieldsTypes } from "./types"
 import DateInput from "../../DateInput"
+import ListView from "../../ListView"
 
 const docentes_list = [
   { text: "Cesar Augusto Moreira", value: "Cesar Augusto Moreira" },
@@ -77,7 +78,7 @@ const fields: FieldsComponents<FieldsTypes>[][] = [
     //   },
     // },
     {
-      component: Form.Input,
+      component: ListView,
       fieldName: "Carreira",
       props: {
         label: "Carreira",

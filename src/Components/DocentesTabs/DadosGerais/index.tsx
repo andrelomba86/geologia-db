@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { Form, Tab } from "semantic-ui-react"
-import { tabIndexGenerate } from "../../GlobalFunctions"
 import { FieldsTypes } from "./types"
-import { emptyState } from "./consts"
-import fieldsComponents from "./FieldsComponents"
 import { FieldsComponents } from "../../GlobalTypes"
+import { initialState } from "./consts"
 import { DropdownItemProps } from "semantic-ui-react"
+import fieldsComponents from "./FieldsComponents"
 
 import DB from "./DBEmulator"
 
 export default function DadosGerais() {
-  const [fieldsValues, setFieldsValues] = useState<FieldsTypes>(emptyState)
+  const [fieldsValues, setFieldsValues] = useState(initialState)
   const [fieldsChanged, setFieldsChanged] = useState(false)
 
   useEffect(() => {
@@ -50,15 +49,15 @@ export default function DadosGerais() {
               {group.map(
                 (field: FieldsComponents<FieldsTypes>, fieldNum: number) => (
                   <field.component
-                    {...field.props}
-                    {...(field.props.options && {
-                      onAddItem: handleAddItem(field.props.options),
-                    })}
-                    tabIndex={tabIndexGenerate(groupKey, fieldNum)}
-                    onChange={handleFieldChange(field.fieldName)}
-                    value={fieldsValues[field.fieldName]}
+                    tabIndex={groupKey * 100 + fieldNum}
                     key={field.fieldName}
                     fieldname={field.fieldName}
+                    onChange={handleFieldChange(field.fieldName)}
+                    value={fieldsValues[field.fieldName]}
+                    {...(field.props.options !== undefined && {
+                      onAddItem: handleAddItem(field.props.options),
+                    })}
+                    {...field.props}
                   />
                 )
               )}

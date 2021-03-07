@@ -1,5 +1,5 @@
 import { FieldsTypes } from "./types"
-export const emptyState: FieldsTypes = {
+export const initialState: FieldsTypes = {
   Docente: "",
   DataAdmissão: null,
   Matricula: "",
