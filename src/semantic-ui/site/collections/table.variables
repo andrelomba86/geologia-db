@@ -1,3 +1,15 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+
+@margin: 0;
+
+// Active
+@activeColor: #FFF;
+@activeBackgroundColor: #00a39b;
+
+
+// Selectable
+// @selectableBackground: #00a39b;
+//@selectableTextColor: #FFF;

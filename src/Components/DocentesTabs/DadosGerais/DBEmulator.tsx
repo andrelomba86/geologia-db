@@ -9,7 +9,8 @@ const DB = {
       Referencia: "",
       Cargo: "",
       DataCargo: null,
-      Carreira: "",
+      Carreira:
+        '[{"reference":"MS5.1","date":"25/01/2020"},{"reference":"MS3.2","date":"05/01/2005"},{"reference":"MS3.1","date":"02/10/2000"}]',
     }
   },
 }

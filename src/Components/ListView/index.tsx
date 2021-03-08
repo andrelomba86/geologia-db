@@ -1,17 +1,29 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Form, Table } from "semantic-ui-react"
 import { ListViewProps } from "./types"
 
-const ListView: React.FC<ListViewProps> = ({ label, width, ...props }) => {
+const ListView: React.FC<ListViewProps> = ({
+  label,
+  width,
+  headers,
+  value,
+  ...props
+}) => {
   const [selectedRow, setSelectedRow] = useState(0)
+  const [tableData, setTableData] = useState<Array<any>>([])
 
-  const tableData = [
-    { reference: "MS5.1", date: "25/01/2020" },
-    { reference: "MS3.2", date: "05/01/2005" },
-    { reference: "MS3.1", date: "02/10/2000" },
-  ]
-
-  const headers = ["Referência", "Data"]
+  useEffect(() => {
+    let data = []
+    if (value !== "") {
+      try {
+        data = JSON.parse(value)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    if (!Array.isArray(data)) data = []
+    setTableData(data)
+  }, [value])
 
   const renderBodyRow = (rowData: [], index: number) => ({
     key: index,
@@ -30,14 +42,10 @@ const ListView: React.FC<ListViewProps> = ({ label, width, ...props }) => {
         compact="very"
         size="small"
         selectable
+        sortable
         headerRow={headers}
         renderBodyRow={renderBodyRow}
         tableData={tableData}
-        style={{
-          "-webkit-user-select": "none",
-          "-ms-user-select": "none",
-          "user-select": "none",
-        }}
       />
     </Form.Field>
   )

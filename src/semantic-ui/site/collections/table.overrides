@@ -1,3 +1,15 @@
 /*******************************
          Site Overrides
 *******************************/
+
+
+.ui.table:focus {
+  outline: none;
+}
+
+.ui.table {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+}

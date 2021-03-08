@@ -83,6 +83,7 @@ const fields: FieldsComponents<FieldsTypes>[][] = [
       props: {
         label: "Carreira",
         width: 4,
+        headers: ["Referência", "Data"],
       },
     },
   ],
