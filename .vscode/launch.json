@@ -7,9 +7,9 @@
     {
       "type": "firefox",
       "name": "Debug app",
-      "request": "attach"
-      //   "runtimeExecutable": "/snap/bin/chromium",
-      //   "request": "launch",
+      "request": "attach",
+      "runtimeExecutable": "/snap/bin/chromium"
+      // "request": "launch"
       //   "trace": true,
       //   "name": "chrome2",
       //   "url": "http://localhost:3000",

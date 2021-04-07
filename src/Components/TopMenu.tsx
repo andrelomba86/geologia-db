@@ -1,45 +1,31 @@
-import React, { ReactElement, useState } from 'react'
-import { Menu } from 'semantic-ui-react'
-import { MenuItems } from './GlobalTypes'
+import React, { ReactElement, useState } from "react"
+// import { Menu } from "semantic-ui-react"
+import { Menubar, MenubarProps } from "primereact/menubar"
+import { MenuItem } from "primereact/api"
+import { useHistory } from "react-router-dom"
+
+// import { MenuItems } from "./GlobalTypes"
 
 export default function TopMenu(): ReactElement {
-  const TopMenuItems: MenuItems = [
+  let history = useHistory()
+  const items: MenuItem[] = [
     {
-      title: 'Docentes',
-      name: 'docentes',
-      component: <ProvisoryNullComponent />,
-      route: '',
+      label: "Docentes",
+      command: (event) => history.push("/Docentes"),
     },
     {
-      title: 'Funcionários',
-      name: 'func',
-      component: <ProvisoryNullComponent />,
-      route: '',
+      label: "Funcionários",
+      command: (event) => history.push("/Funcionarios"),
     },
   ]
 
-  // let activeItem: TopMenuItems = TopMenuItems.Docentes
-  const [activeItem, setActiveItem] = useState(TopMenuItems[0].name)
-  return (
-    <Menu stackable>
-      <Menu.Item>
-        <img src="logo192.png" alt="" />
-      </Menu.Item>
-      {TopMenuItems.map((item, menuKey) => {
-        return (
-          <Menu.Item
-            name={item.name}
-            active={activeItem === item.name}
-            onClick={() => setActiveItem(item.name)}
-            key={menuKey}>
-            {item.title}
-          </Menu.Item>
-        )
-      })}
-    </Menu>
+  const icon = (
+    <img
+      src="logo192.png"
+      width="48px"
+      style={{ padding: "0px 10px", width: "48px" }}
+      alt=""
+    />
   )
-}
-
-function ProvisoryNullComponent(): ReactElement {
-  return <div></div>
+  return <Menubar model={items} start={icon} />
 }
