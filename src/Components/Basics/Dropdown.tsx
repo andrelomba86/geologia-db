@@ -8,7 +8,7 @@ export const Dropdown: React.FC<DropdownProps & CommonProps> = ({
   ...props
 }) => {
   const _props: DropdownProps = Object.assign(props)
-  // _props.options = ["a"]
+  // _props.optionDisabled = true
   return (
     <div className={`p-field p-col-12 p-md-${colSize}`}>
       {label && <label>{label}</label>}

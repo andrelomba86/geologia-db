@@ -1,8 +1,35 @@
 import React from "react"
-import { DataTable, DatePicker, Dropdown, InputText } from "../../Basics"
-import { DropdownItems, FieldsComponents, FieldsType } from "../../GlobalTypes"
+import {
+  CollapsableDataTable,
+  DatePicker,
+  Dropdown,
+  InputText,
+} from "../../Basics"
+import {
+  DropdownItems,
+  FieldMap,
+  FieldsComponents,
+  FieldsType,
+} from "../../GlobalTypes"
+/* TODO 
 
-export const fieldsProperties: FieldsComponents<FieldsType>[] = [
+--
+
+*/
+const loadIcon = <i className="pi pi-spin pi-spinner"></i>
+
+/*  (
+  
+) */
+
+export const fieldsProperties = (
+  dropdownLists: DropdownItems = {
+    Docente: [],
+    Cargo: [],
+    RegimeJurídico: [],
+    RegimeDeTrabalho: [],
+  }
+): Array<FieldsComponents<FieldsType>> => [
   {
     fieldName: "Docente",
     component: Dropdown,
@@ -10,7 +37,7 @@ export const fieldsProperties: FieldsComponents<FieldsType>[] = [
       label: "Nome",
       placeholder: "Nome do docente",
       colSize: "12",
-      options: [],
+      options: dropdownLists.Docente,
       optionLabel: "item",
     },
   },
@@ -19,7 +46,7 @@ export const fieldsProperties: FieldsComponents<FieldsType>[] = [
     component: Dropdown,
     props: {
       label: "Cargo",
-      options: [],
+      options: dropdownLists.Cargo,
       filter: true,
       editable: true,
       optionLabel: "item",
@@ -39,7 +66,6 @@ export const fieldsProperties: FieldsComponents<FieldsType>[] = [
     component: DatePicker,
     props: {
       label: "Data de admissão",
-      // placeholder: "DD/MM/AAAA",
       colSize: "3",
     },
   },
@@ -48,8 +74,7 @@ export const fieldsProperties: FieldsComponents<FieldsType>[] = [
     component: Dropdown,
     props: {
       label: "Regime jurídico",
-      options: [],
-      filter: true,
+      options: dropdownLists.RegimeJurídico,
       editable: true,
       optionLabel: "item",
       colSize: "3",
@@ -68,8 +93,8 @@ export const fieldsProperties: FieldsComponents<FieldsType>[] = [
     component: Dropdown,
     props: {
       label: "Regime de trabalho",
-      options: [],
-      filter: true,
+      options: dropdownLists.RegimeJurídico,
+      // filter: true,
       editable: true,
       optionLabel: "item",
       colSize: "3",
@@ -93,7 +118,7 @@ export const fieldsProperties: FieldsComponents<FieldsType>[] = [
   },
   {
     fieldName: "Carreira",
-    component: DataTable,
+    component: CollapsableDataTable,
     props: {
       headers: [
         { field: "Referencia", header: "Referência" },
@@ -103,30 +128,43 @@ export const fieldsProperties: FieldsComponents<FieldsType>[] = [
       colSize: "4",
     },
   },
-
-  //     {
-  //       component: ListView,
-  //       fieldName: "Carreira",
-  //       props: {
-  //         label: "Carreira",
-  //         width: 4,
-  //         headers: ["Referência", "Data"],
-  //       },
-  //     },
-  //   ],
 ]
+//TODO
+/**
+ * @param {Object} arg
+ *
+ * handleFieldChange - Function to handle changes in the field
+ *
+ * dynamicFieldsProps.drodownLists - Variable that contains Object with each dropdown list (use fields names as the keys)
+ *
+ * fieldsValues - Object containing fields values
+ *
+ * @returns Array containing all the fields with dynamic properties defined
+ */
 
-const getInitialDropdownItems = () => {
-  const loadIcon = <i className="pi pi-spin pi-spinner"></i>
+export const fieldsMap = ({
+  handleFieldChange,
+  fieldsProperties,
+  fieldsValues,
+}: FieldMap) =>
+  fieldsProperties.map(
+    (field: FieldsComponents<FieldsType>, fieldNum: number) => {
+      return (
+        <field.component
+          tabIndex={fieldNum}
+          key={field.fieldName}
+          fieldname={field.fieldName}
+          onChange={handleFieldChange(field.fieldName)}
+          value={fieldsValues[field.fieldName]}
+          {...field.props}
+        />
+      )
+    }
+  )
 
-  let dropdownItems: DropdownItems = {}
-  fieldsProperties.forEach((field, fieldNum) => {
-    if (field.component === Dropdown)
-      dropdownItems = {
-        ...dropdownItems,
-        [field.fieldName]: [{ item: loadIcon }],
-      }
-  })
-  return dropdownItems
-}
-export const initialDropdownItems = getInitialDropdownItems()
+export const dropdownFieldsToFetch = [
+  "Docente",
+  "Cargo",
+  "RegimeJurídico",
+  "RegimeDeTrabalho",
+]

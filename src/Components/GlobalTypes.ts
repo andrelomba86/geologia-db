@@ -2,7 +2,6 @@ export interface FieldsComponents<T> {
   // component: React.FunctionComponent
   component: React.FC<any>
   fieldName: keyof T
-  options?: {}
   props: FieldsProps
 }
 
@@ -31,13 +30,18 @@ export interface CommonProps {
 
 // export interface
 export interface DropdownItems {
-  [index: string]: any[]
+  [index: string]: any
 }
 
 export interface FieldsType {
   [index: string]: any
 }
 
+export interface FieldMap {
+  handleFieldChange: (fieldName: keyof FieldsType) => void
+  fieldsProperties: Array<FieldsComponents<FieldsType>>
+  fieldsValues: FieldsType
+}
 // {
 //   [index: number]: {
 //     [name: string]: JSX.Element | string

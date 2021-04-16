@@ -265,11 +265,13 @@
 }
 
 .p-datepicker {
-  padding: 0.3rem;
+  padding: 0.6rem;
   background: #ffffff;
   color: #495057;
   border: 1px solid #ced4da;
   border-radius: 3px;
+  min-width: 0;
+  /* !important; */
 }
 .p-datepicker:not(.p-datepicker-inline) {
   background: #ffffff;
