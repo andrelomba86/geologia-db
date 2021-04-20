@@ -1,3 +1,13 @@
+export interface FieldsProperties {
+  // component: React.FunctionComponent
+  [fieldName: string]: {
+    component: React.FC<any>
+    fetchOptions?: Boolean
+    props: any
+    // FieldsProps
+  }
+}
+//TODO: apagar fieldscomponentes e fieldsprosp
 export interface FieldsComponents<T> {
   // component: React.FunctionComponent
   component: React.FC<any>
@@ -39,7 +49,7 @@ export interface FieldsType {
 
 export interface FieldMap {
   handleFieldChange: (fieldName: keyof FieldsType) => void
-  fieldsProperties: Array<FieldsComponents<FieldsType>>
+  fieldsProperties: FieldsProperties
   fieldsValues: FieldsType
 }
 // {

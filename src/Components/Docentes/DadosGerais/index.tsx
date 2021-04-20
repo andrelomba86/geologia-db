@@ -1,33 +1,27 @@
 import React, { useEffect, useState } from "react"
 import { Form, SubmitButtons } from "../../Basics"
+import { fieldsMap } from "../../GlobalFunctions"
 import { DropdownItems, FieldsType } from "../../GlobalTypes"
 import { initialState } from "./consts"
 import DB from "./DBEmulator"
-import {
-  dropdownFieldsToFetch,
-  fieldsMap /*, initialDropdownItems */,
-  fieldsProperties as fieldsPropertiesFN,
-} from "./Fields"
+import { fieldsBuilder } from "./Fields"
 //TODO: alterar nomem de fieldsProperties no arquivo Fields.tsx
 
 export default function DadosGerais() {
   const [fieldsValues, setFieldsValues] = useState(initialState)
   const [fieldsChanged, setFieldsChanged] = useState(false)
 
-  const [dropdownLists, setDropdownLists] = useState<DropdownItems>({
-    Docente: [],
-    Cargo: [],
-    RegimeJurídico: [],
-    RegimeDeTrabalho: [],
-  })
+  const [dropdownLists, setDropdownLists] = useState<DropdownItems>({})
+
+  fieldsBuilder.setFieldsOptions(dropdownLists)
+  let fieldsProperties = fieldsBuilder.fieldsProperties
 
   useEffect(() => {
     //TODO: LOADING ICON
+    const fieldsToFetch = fieldsBuilder.fieldsToFetch
     const updateDropdownLists = async () => {
-      console.log("update")
       let lists = {}
-      console.log()
-      for (let key of dropdownFieldsToFetch) {
+      for (let key of fieldsToFetch) {
         let fetchedList = await DB.fetch(key)
         lists = { ...lists, [key]: fetchedList }
       }
@@ -38,9 +32,6 @@ export default function DadosGerais() {
     setFieldsValues(DB.getValues())
   }, [])
 
-  const fieldsProperties = fieldsPropertiesFN(dropdownLists)
-
-  console.log(dropdownLists, fieldsProperties)
   const handleFieldChange = (fieldName: keyof FieldsType) => {
     return (event: React.ChangeEvent) => {
       setFieldsValues({
@@ -58,8 +49,6 @@ export default function DadosGerais() {
     setFieldsChanged(false)
   }
   // debugger
-
-  // const fieldsProperties = fieldsProperties(dropdownLists)
 
   return (
     <Form>
